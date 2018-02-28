@@ -1,0 +1,93 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{% load staticfiles %} 
+{% load interest_taxx %}
+
+
+<form id="search" action="{% url "catalog_search" %}" method="get">
+  <input type="text" name="q" />
+  <button type="submit">search</button>
+</form>
+<!-- <form id="search" action="{% url "catalog_search" %}" method="GET"> -->
+  <!-- <fieldset> -->
+    <!-- <legend>Я хочу найти:</legend> -->
+    <!-- <input type="text" name="q" id="text-to-find" value="Я хочу найти&hellip;" onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"> -->
+    <!-- <input type="button" onclick="javascript: FindOnPage('text-to-find'); return false;" id="sf_submit" value="найти"> -->
+  <!-- </fieldset> -->
+<!-- </form> -->
+
+<!-- main content -->
+<div id="homepage" class="conainer">
+
+  <ul class="menu">
+    <li>
+      <a href="/previewWarmFloors.html">Теплые полы</a>
+    </li>
+    <li>
+      <a href="/previewAccessories.html">Аксессуары к теплым полам</a>
+    </li>
+    <li>
+      <a href="/previewAllCond.html">Кондиционеры</a>
+    </li>
+  </ul>
+
+  {% for product in object_list %}
+
+  <div class="section_product column">
+    <div class="col-xs-3">
+      <div class="product">
+        <a href="allCatalog/{{ product.slug }}.html">
+          <img src="{{ product.image.url }}" alt="">
+        </a>
+
+        <div class="product_info">{{ product.name }}</div>
+
+        <div class="brand">{{ product.brand }}</div>
+        <div class="product_price">{{ product.price|increase_perc_filter}} руб/шт.</div>
+        <div class="product_basket">
+          <a href="../../basket.html">Добавить в</a>
+          <img src="{% static 'images/SVG/cart.svg' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<div class="nav_catalog">
+  {% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li>
+      <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+    </li>
+    {% else %}
+    <li class="disabled">
+      <span>&laquo;</span>
+    </li>
+    {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+    <li class="active">
+      <span>{{ i }}
+        <span class="sr-only">(current)</span>
+      </span>
+    </li>
+    {% else %}
+    <li>
+      <a href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endif %} {% endfor %} {% if page_obj.has_next %}
+    <li>
+      <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+    </li>
+    {% else %}
+    <li class="disabled">
+      <span>&raquo;</span>
+    </li>
+    {% endif %}
+  </ul>
+  {% endif %}
+</div>
+
+
+{% endblock %}

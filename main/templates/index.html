@@ -1,0 +1,72 @@
+ {% extends 'base.html' %} {% block content %} {% load staticfiles %}
+
+
+<div class="slider">
+  <ul id="slides">
+    <li class="slide showing">
+      <img src="../static/images/slides/1.jpg">
+    </li>
+    <li class="slide">
+      <img src="../static/images/slides/2.jpg">
+    </li>
+    <li class="slide">
+      <img src="../static/images/slides/3.jpg">
+    </li>
+    <li class="slide">
+      <img src="../static/images/slides/4.jpg">
+    </li>
+    <li class="slide">
+      <img src="../static/images/slides/5.jpg">
+    </li>
+  </ul>
+  <script src="{% static 'js/slider.js' %}"></script>
+</div>
+<!-- main content -->
+<div id="homepage">
+  <!-- first Box -->
+  <section class="why_we">
+
+    <article>
+      <h2>Почему вы можете доверять выбору наших полов?</h2>
+      <ul class="why_me_icon">
+        <li>
+          <img src="../static/images/SVG/hourglass.svg">
+          <p>они долговечны и надежны</p>
+        </li>
+        <li>
+          <img src="../static/images/SVG/leaf.svg">
+          <p>они экологичны</p>
+        </li>
+        <li>
+          <img src="../static/images/SVG/plugin.svg">
+          <p>они легки в установке</p>
+        </li>
+        <li>
+          <img src="../static/images/SVG/piggy.svg">
+          <p>лучшая цена на рынке</p>
+        </li>
+      </ul>
+    </article>
+
+
+    <a name="partners"></a>
+    <article class="partners">
+      <h2>Наши партнеры</h2>
+      <img src="../static/images/parthners.png" alt="">
+    </article>
+
+    <a name="contact"></a>
+    <article class="contact">
+      <h2>Как вы можете нас найти?</h2>
+      <p>Мы находимся по адресу г. Сочи, ул. Донская 7б</p>
+      <!-- 8(918)-309-88-17 -->
+      <p>Так же звоните нам по всем вопросам на номер
+        <span>8(918)-309-88-17</span>
+      </p>
+      <iframe class="google-maps" src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d361.0703879901587!2d39.725135507996626!3d43.61563759638047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m5!1s0x40f5cb867bdd6d65%3A0xf0c8c2401b61bb1e!2z0YPQuy4g0JTQvtC90YHQutCw0Y8sINCh0L7Rh9C4LCDQmtGA0LDRgdC90L7QtNCw0YDRgdC60LjQuSDQutGA0LDQuQ!3m2!1d43.617152499999996!2d39.7244835!4m3!3m2!1d43.615684699999996!2d39.7251275!5e0!3m2!1sru!2sru!4v1516492920877">
+      </iframe>
+    </article>
+  </section>
+</div>
+
+{% endblock %}

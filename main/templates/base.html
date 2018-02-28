@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {% load staticfiles %}
+
+    <title>Эко-полы</title>
+
+    <!-- прописать условие в загаловке, чтобы он менялся для разных страниц -->
+    <!-- <meta charset="UTF-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="{% static 'css/reset.css' %}"> -->
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap-flex.min.css" rel="stylesheet" > -->
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
+    <!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/buttunup.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
+    <!-- 
+поиск работает только в разделе католога, 
+позже сделать другой поиск, а пока что вырезать его
+из главной и корзины
+-->
+
+    <!-- настроить все пути для новой категории товаров -->
+
+
+</head>
+
+<body>
+    <div class="wrapper row1">
+        <header id="header" class="clear">
+            <div id="hgroup">
+                <h1 class="logo">
+                    <a href="/">Теплые полы</a>
+                </h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="/allCatalog.html">Каталог</a>
+                    </li>
+                    <li>
+                        <a href="/#partners">Партнеры</a>
+                    </li>
+                    <li>
+                        <a href="/#contact">Контакты</a>
+                    </li>
+                    <li>
+                        <a href="/basket.html">Корзина</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <!-- content -->
+
+    <div class="wrapper row2">
+        <div id="container" class="clear">
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="wrapper row3">
+        <div id="footer" class="clear">
+            <!-- Section One -->
+            <section class="one_quarter">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="catalog/allCatalog/allCatalog.html">Каталог</a>
+                        </li>
+                        <li>
+                            <a href="#partners">Партнеры</a>
+                        </li>
+                        <li>
+                            <a href="#contact">Контакты</a>
+                        </li>
+                        <li>
+                            <a href="basket.html">Корзина</a>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+
+        </div>
+
+    </div>
+    <!-- Copyright -->
+    <div class="wrapper row4">
+        <footer id="copyright" class="clear">
+            <p class="fl_left">Все права защещены &copy; 2018
+                <a href="#">eco-floor.ru</a>
+            </p>
+        </footer>
+    </div>
+    <a href="#" class="scrollup">Наверх</a>
+</body>
+
+</html>

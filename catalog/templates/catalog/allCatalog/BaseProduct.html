@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %} {% load staticfiles %} {% load mathfilters %}
+<div class="container">
+  <div id="homepage">
+    <div class="poduct_details">
+      <div class="poduct_details_img">
+        <img src="{{ product.image.url }}" alt="">
+
+        <p class="product_details_basket vcenter text-center">
+          <a href="../../../basket.html">Добавить в</a>
+          <img src="{% static '/images/SVG/cart.svg' %}" alt="">
+        </p>
+        <p class="poduct_details_price">{{ product.price|mul:1.13|floatformat:"1" }} руб/шт</p>
+        {% if product.available %}
+        <p>в наличии: {{ product.stock }}</p>
+        {% else %}
+        <div class="available">
+          <p class="available_des">товар доступен для предварительного заказа по телефону</p>
+          <p class="available_number">8(918)-309-88-17</p>
+        </div>
+        <style>
+          .product_details_basket {
+            position: absolute;
+            clip: rect(0 0 0 0);
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+          }
+        </style>
+        {% endif %}
+      </div>
+      <div>
+        <!-- поправить все bootsrap стилями -->
+
+        <div class="poduct_details_description">
+          <h3>описание</h3>
+          <p>
+            {{ product.description | linebreaks}}
+          </p>
+
+
+          <!-- сделать характеристики редактируемыми из админки -->
+          <!-- для получения среза строки {{ product.name|slice:"20:" }} -->
+          <h3>характеристики</h3>
+          <ul class="product_char">
+            <li>Наиминование: {{ product.name }} </li>
+            <li>Тип продукта: Нагревательный мат для теплого пола</li>
+            <li>Способ подключения: Двухжильный</li>
+            <li>Тип монтажа: В плиточный клей; В стяжку</li>
+            <li>Тип покрытия: Паркетная доска; Ламинат; Ковролин; Плитка; Линолеум</li>
+            <li>Помещение: Коридор; Кухня; Санузел; Жилая комната</li>
+            <li>Вид обогрева: Комфортный пол; Основной обогрев</li>
+            <li>Гарантия: Пожизненная</li>
+            <li>Габариты упаковки: 53x17x17см</li>
+            <li>Бренд: {{ product.brand }}</li>
+            <li>Страна изготовитель: Россия</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  {% endblock %}

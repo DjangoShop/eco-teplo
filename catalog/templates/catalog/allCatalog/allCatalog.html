@@ -1,0 +1,134 @@
+{% extends 'base.html' %} 
+{% block content %} 
+{% load staticfiles %}
+{% load interest_taxx %}
+
+
+<form id="search" action="{% url "catalog_search" %}" method="get">
+  <input type="text" name="q" />
+  <button type="submit">search</button>
+</form>
+
+
+
+<!-- main content -->
+<div id="homepage" class="container">
+
+  <div class="row">
+    <div class="preview_all_catalog">
+
+        <div class="preview_catalog_warm_floors col-xs-1">
+            <a href="/previewWarmFloors.html">
+                <img src="{% static "images/product/preview/teplyy-pol.png" %}" alt="">
+            </a>
+            <p>
+                Теплый пол
+            </p>
+            <div class="preview_catalog_more_info">
+              <p>Кабельный теплый пол</p>  
+              <p>Нагревательные маты</p> 
+              <p>Инфакрасная пленка</p> 
+            </div>
+        </div>
+
+        <div class="preview_catalog_accessories col-xs-2">
+            <a href="/previewAccessories.html">
+                <img src="{% static "images/product/preview/accessories.png" %}" alt="">
+            </a> 
+            <p>
+              Аксессуары к теплым полам
+            </p>
+            <div class="preview_catalog_more_info">
+              <p>Терморегуляторы</p> 
+              <p>Монтажный набор </p> 
+              <p>Теплоизоляция</p> 
+            </div>
+        </div>
+
+        <div class="previw_catalog_cond col-xs-3">
+            <a href="/previewAllCond.html">
+                <img src="{% static "images/product/preview/cond.png" %}" alt="">
+            </a> 
+            <p>
+                Кондиционеры
+            </p>
+            <div class="preview_catalog_more_info">
+              <p>Сплит-система</p> 
+              <p>Инвертор-система</p>  
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+  {% for product in object_list %}
+
+  <div class="section_product column">
+    <div class="col-xs-3">
+      <div class="product">
+        <a href="allCatalog/{{ product.slug }}.html">
+          <img src="{{ product.image.url }}" alt="">
+        </a>
+
+        <div class="product_info">{{ product.name }}</div>
+
+        <div class="brand">{{ product.brand }}</div>
+        
+        <div class="product_price">{{ product.price|increase_perc_filter}} руб/шт.</div>
+        <!-- фильтр умножает цену на 1.13 и оставляет 1 знак после запятой -->
+        
+        <div class="product_basket">
+          <a href="../../basket.html">Добавить в</a>
+          <img src="{% static 'images/SVG/cart.svg' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  {% endfor %}
+
+
+
+
+</div>
+
+
+
+<div class="nav_catalog">
+  {% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li>
+      <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+    </li>
+    {% else %}
+    <li class="disabled">
+      <span>&laquo;</span>
+    </li>
+    {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+    <li class="active">
+      <span>{{ i }}
+        <span class="sr-only">(current)</span>
+      </span>
+    </li>
+    {% else %}
+    <li>
+      <a href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endif %} {% endfor %} {% if page_obj.has_next %}
+    <li>
+      <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+    </li>
+    {% else %}
+    <li class="disabled">
+      <span>&raquo;</span>
+    </li>
+    {% endif %}
+  </ul>
+  {% endif %}
+</div>
+
+
+{% endblock %}
