@@ -4,10 +4,15 @@
 {% load interest_taxx %}
 
 
-<form id="search" action="{% url "catalog_search" %}" method="get">
-  <input type="text" name="q" />
-  <button type="submit">search</button>
-</form>
+  <form id="search" action="{% url 'catalog_search' %}" method="get">
+    <input id="search_field" type="text" name="q" />
+    <button id="#sf_submit" type="submit">поиск</button>
+  </form>
+{% for product in object_list %}
+{% empty %}
+    <p class="search_not_found">Товар {{ catalog_search }} по вашему запросу не найден...</p>
+    <p class="search_not_found">Попробуйте повторить запрос с другой формулировкой</p>
+{% endfor %}
 <!-- <form id="search" action="{% url "catalog_search" %}" method="GET"> -->
   <!-- <fieldset> -->
     <!-- <legend>Я хочу найти:</legend> -->

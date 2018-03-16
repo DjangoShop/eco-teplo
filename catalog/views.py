@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, response
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from catalog.models import Product, Category
@@ -8,6 +9,9 @@ from catalog.admin import ProductAdmin
 from django.views.generic import ListView, DetailView
 from django.conf.urls import url
 from django.db.models import Q
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+
+
 
 # TODO так же ИК пленочный пол продается по кв.м. максимум 100 кв.м
 
@@ -139,44 +143,38 @@ class productView(DetailView):
     context_object_name = 'product'  # Default: object_list
 
 
+
+
 class search(ListView):
     model = Product
     paginate_by = 14
+    template_name = 'catalog/product_list.html'
+    
+
     def get_queryset(self):
+        
         # Получаем не отфильтрованный кверисет всех моделей
-        queryset = super(ListView, self).get_queryset()
+        stop_words = ~SearchQuery(['и', 'при', 'а', 'для', 'в', 'на', 'из', 'которые', 'дешовый', 'специальные', 'недорогие', 'по', 'у', 'за', 'руб', 'рубли', 'рублей', 'кабель', 'пленка'])
+        queryset = super(search, self).get_queryset()
         q = self.request.GET.get("q")
-        # q_lst2 = re.sub('ы', '', q)
+      
+        # (Q(pg_searsh(first_brand)) | Q(pg_searsh(second_brand))
         
+        #return queryset.annotate(search=SearchQuery(Q('brand__name')) | SearchQuery(Q('name'))).filter(search=q)
+       
         
-        q_lst2 = q.replace('ы', '')
-        # q_lst3 = q[0:-1].replace('е', 'й')
-        q_lst = q.split(' ')
-        
-        # q_lst2 = re.sub(r"[ы]", "", q)
-        if q or q_lst or q_lst2:
+        if q: #or q_lst or q_lst2
         # Если 'q' в GET запросе, фильтруем кверисет по данным из 'q'
-            return queryset.filter(Q(name__icontains=q) |
-                                Q(name__in=q_lst) |
-                                 Q(name__icontains=q_lst2) |
-                                  # Q(name__in=q_lst3) |
-
-                                    Q(brand__name__icontains=q) |
-                                     Q(brand__name__in=q_lst) |
-                                      Q(brand__name__icontains=q_lst2) |
-
-                                        Q(category__name__icontains=q) |
-                                         Q(category__name__in=q_lst) |
-                                          Q(category__name__icontains=q_lst2) |
-
-                                                Q(categorysub__name__icontains=q) |
-                                                 Q(categorysub__name__in=q_lst) |
-                                                  Q(categorysub__name__icontains=q_lst2))
+            # FIXME сделать фильтр по ценам
+            # TODO добавить ещё один return, чтобы можно было искать по несколько брендов сразу
+            # TODO посмотреть можно ли, если написать название категории или бренда раздельно и как-то найти по такой строке
+            return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)
+            return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)  
+            #return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=stop_words)
+     #       return Product.objects.search(q)
+        elif not q:
+             return queryset.order_by('price')
         
-        
-        elif q == 'пока':
-            queryset = Product.objects.all().order_by('price').filter(category='4', categorysub='10')
-
         
         # TODO сделать название всех товаров, категорий, брендов и подкатегорий с маленькой буквы
         # не использовать букву ё в названиях

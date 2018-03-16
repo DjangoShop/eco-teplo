@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 
 
 
+
 # Модель категории
 class Category(models.Model):
     name = models.CharField(max_length=200, db_index=True, verbose_name="Категория")
@@ -15,10 +16,13 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+    
 
-    def __str__(self):    
-        return self.name
- 
+    # def __str__(self):    
+    #     return self.name
+
+    def __unicode__(self):
+        return "%s" % (self.name)
 
 # Модель подкатегории
 class SubCategory(models.Model):
@@ -29,8 +33,13 @@ class SubCategory(models.Model):
         verbose_name = 'Подкатегория'
         verbose_name_plural = 'Подкатегории'
 
-    def __str__(self):    
-        return self.name
+    
+
+    # def __str__(self):    
+    #     return self.name
+
+    def __unicode__(self):
+        return "%s" % (self.name)
 
 # Модель бренда
 class Brand(models.Model):
@@ -40,9 +49,13 @@ class Brand(models.Model):
         verbose_name = 'Бренд'
         verbose_name_plural = 'Бренды'
 
-    def __str__(self):    
-        return self.name
+    
 
+    # def __str__(self):    
+    #     return self.name
+
+    def __unicode__(self):
+        return "%s" % (self.name)
 
 
 # Модель продукта
@@ -71,5 +84,8 @@ class Product(models.Model):
             ['id', 'slug']
         ]
 
+
     def __str__(self):
         return self.name
+    
+    
