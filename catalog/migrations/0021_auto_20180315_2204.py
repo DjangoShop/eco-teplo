@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-from django.contrib.postgres.operations import TrigramExtension, UnaccentExtension
 
 
 class Migration(migrations.Migration):
@@ -13,10 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        TrigramExtension(),
-
-        UnaccentExtension(),
-
         migrations.AlterModelOptions(
             name='product',
             options={'ordering': ['name'], 'verbose_name': 'Продукт', 'verbose_name_plural': 'Продукты'},

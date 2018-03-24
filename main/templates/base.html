@@ -1,16 +1,17 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
-    {% load staticfiles %}
+   
 
     <!-- <title>Эко-полы</title> -->
-    {% block title %}{% endblock %}
+    
 
     <!-- прописать условие в загаловке, чтобы он менялся для разных страниц -->
     <!-- <meta charset="UTF-8"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    {% block title %}{% endblock %}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="{% static 'css/reset.css' %}"> -->
     <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
@@ -44,7 +45,7 @@
             <nav>
                 <ul class="nav-menu">
                     <li>
-                        <a href="/allCatalog.html">Каталог</a>
+                        <a href="/allCatalog">Каталог</a>
                     </li>
                     <li>
                         <a href="/#partners">Партнеры</a>
@@ -74,7 +75,7 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="catalog/allCatalog/allCatalog.html">Каталог</a>
+                            <a href="allCatalog">Каталог</a>
                         </li>
                         <li>
                             <a href="#partners">Партнеры</a>

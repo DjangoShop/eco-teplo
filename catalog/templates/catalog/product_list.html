@@ -2,7 +2,7 @@
 {% block content %} 
 {% load staticfiles %} 
 {% load interest_taxx %}
-{% block title %}<title>Товары по запросу</title>{% endblock %}
+{% block title %}<title> {% if category %} {{ category.name }} {% else %} Страница товаров {% endif %} </title>{% endblock %}
 
   <!-- <form id="search" action="{% url 'catalog_search' %}" method="get">
     <input id="search_field" type="text" name="q"/>

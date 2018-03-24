@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load staticfiles %}
-{% block title %}<title>Аксессуары</title>{% endblock %}
+{% block title %} <title>Аксессуары</title> {% endblock %}
 
 <form id="search" action="{% url 'catalog_search' %}" method="get">
     <input id="search_field" type="text" name="q" value="Я хочу найти&hellip;"onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"/>

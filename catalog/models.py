@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 from django.db import models, migrations
 from django.core.urlresolvers import reverse

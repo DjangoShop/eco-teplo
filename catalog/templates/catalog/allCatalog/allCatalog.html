@@ -2,7 +2,7 @@
 {% block content %} 
 {% load staticfiles %}
 {% load interest_taxx %}
-{% block title %}<title>Все товары</title>{% endblock %}
+{% block title %} <title>Каталог</title> {% endblock %}
 
 <form id="search" action="{% url 'catalog_search' %}" method="get">
   <input id="search_field" type="text" name="q" value="Я хочу найти&hellip;"onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"/>
@@ -63,7 +63,7 @@
   <div class="section_product column">
     <div class="col-xs-3">
       <div class="product">
-        <a href="allCatalog/{{ product.slug }}.html">
+        <a href="{{ product.slug }}.html">
           <img src="{{ product.image.url }}" alt="">
         </a>
 

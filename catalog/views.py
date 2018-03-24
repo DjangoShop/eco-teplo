@@ -10,8 +10,6 @@ from django.views.generic import ListView, DetailView
 from django.conf.urls import url
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
-from basket.forms import BasketAddProductForm
-...
 
 
 # Всем привет. Добавил в postgresql дополнение pg_trgm. В Django использую TrigramSimilarity, как совместить его с SearchVector
@@ -203,13 +201,6 @@ class search(ListView):
         elif not q:
              return queryset.order_by('price')
 
-    def post_context(self, request):
-        q = self.request.GET.get("q")
-        if not q:
-            message = 'Товар: %r не найден' % request.GET['q']
-        else:
-            message = 'You submitted an empty form.'
-        return HttpResponse(message)
         # TODO сделать название всех товаров, категорий, брендов и подкатегорий с маленькой буквы
         # не использовать букву ё в названиях
         # сделать чтобы он работал и во множественном числе тоже

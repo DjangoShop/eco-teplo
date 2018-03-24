@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
 from django.views.generic import ListView, DetailView
@@ -20,7 +21,7 @@ urlpatterns = [
     url(r'^catalog_search/$', views.search.as_view(), name='catalog_search'),
     
     # Main category 
-    url(r'^allCatalog.html$', views.all_catalog.as_view(), name='all_catalog'),# ListView.as_view(queryset=Product.objects.all().order_by('price'), template_name='catalog/allCatalog/allCatalog.html')), # все категории
+    url(r'^allCatalog/$', views.all_catalog.as_view(), name='all_catalog'),# ListView.as_view(queryset=Product.objects.all().order_by('price'), template_name='catalog/allCatalog/allCatalog.html')), # все категории
      # category accessories for floors
     
    
@@ -56,6 +57,7 @@ urlpatterns = [
     # url(r'^allCatalog/(?P<slug>[-\w]+).html', DetailView.as_view(model = Product, template_name='catalog/allCatalog/BaseProduct.html')),
     
     url(r'^allCatalog/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
+    
     url(r'^accessoriesFloors/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
     url(r'^conditioners/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
 
