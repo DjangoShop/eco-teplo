@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,8 +36,9 @@ INSTALLED_APPS = [
     'main',
     'basket',
     'catalog',
-    'djorm_pgfulltext',
     'django.contrib.postgres',
+    'django.contrib.postgres.search',
+    'django.contrib.postgres.operations',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,6 +120,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
+
+
+SESSION_COOKIE_AGE = 1209600
+SESSION_COOKIE_DOMAIN = 'localhost'
+SESSION_COOKIE_SECURE = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = False
+
+BASKET_SESSION_ID = 'basket'
+
 
 LANGUAGE_CODE = 'ru-ru'
 

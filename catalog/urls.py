@@ -54,11 +54,17 @@ urlpatterns = [
    
    
     # url(r'^allCatalog/(?P<slug>[-\w]+).html', DetailView.as_view(model = Product, template_name='catalog/allCatalog/BaseProduct.html')),
-    # TODO прописать товар для других категорий
     
     url(r'^allCatalog/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
     url(r'^accessoriesFloors/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
     url(r'^conditioners/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
+
+    # search url
+    url(r'^catalog_search/allCatalog/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
+    url(r'^catalog_search/accessoriesFloors/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
+    url(r'^catalog_search/conditioners/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
+
+
 
     url(r'^warmFloors/All/allCatalog/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),
     url(r'^warmFloors/infraredFilm/allCatalog/(?P<slug>[-\w]+).html', views.productView.as_view(), name='product'),

@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% load staticfiles %} {% load mathfilters %}
+{% extends 'base.html' %} {% block content %} {% load staticfiles %} {% load interest_taxx %}
 <div class="container">
   <div id="homepage">
     <div class="poduct_details">
@@ -6,10 +6,11 @@
         <img src="{{ product.image.url }}" alt="">
 
         <p class="product_details_basket vcenter text-center">
+          
           <a href="../../../basket.html">Добавить в</a>
           <img src="{% static '/images/SVG/cart.svg' %}" alt="">
         </p>
-        <p class="poduct_details_price">{{ product.price|mul:1.13|floatformat:"1" }} руб/шт</p>
+        <p class="poduct_details_price">{{ product.price|increase_perc_filter }} руб/шт</p>
         {% if product.available %}
         <p>в наличии: {{ product.stock }}</p>
         {% else %}

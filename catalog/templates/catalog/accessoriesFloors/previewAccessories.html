@@ -1,11 +1,11 @@
-{% extends 'base.html' %} {% block content %} {% load staticfiles %}
+{% extends 'base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% block title %}<title>Аксессуары</title>{% endblock %}
 
-<form id="search" action="#" method="post">
-    <fieldset>
-        <legend>Я хочу найти:</legend>
-        <input type="text" id="text-to-find" value="Я хочу найти&hellip;" onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;">
-        <input type="button" onclick="javascript: FindOnPage('text-to-find'); return false;" id="sf_submit" value="найти">
-    </fieldset>
+<form id="search" action="{% url 'catalog_search' %}" method="get">
+    <input id="search_field" type="text" name="q" value="Я хочу найти&hellip;"onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"/>
+    <button id="#sf_submit" type="submit">поиск</button>
 </form>
 
 <div id="homepage" class="container">

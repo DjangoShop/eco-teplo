@@ -2,11 +2,11 @@
 {% block content %} 
 {% load staticfiles %}
 {% load interest_taxx %}
-
+{% block title %}<title>Все товары</title>{% endblock %}
 
 <form id="search" action="{% url 'catalog_search' %}" method="get">
-  <input type="text" name="q" />
-  <button type="submit">поиск</button>
+  <input id="search_field" type="text" name="q" value="Я хочу найти&hellip;"onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"/>
+  <button id="#sf_submit" type="submit">поиск</button>
 </form>
 <!-- main content -->
 <div id="homepage" class="container">

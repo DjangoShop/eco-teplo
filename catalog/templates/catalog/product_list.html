@@ -2,17 +2,24 @@
 {% block content %} 
 {% load staticfiles %} 
 {% load interest_taxx %}
+{% block title %}<title>Товары по запросу</title>{% endblock %}
 
-
-  <form id="search" action="{% url 'catalog_search' %}" method="get">
-    <input id="search_field" type="text" name="q" />
+  <!-- <form id="search" action="{% url 'catalog_search' %}" method="get">
+    <input id="search_field" type="text" name="q"/>
     <button id="#sf_submit" type="submit">поиск</button>
-  </form>
+  </form> -->
+
+<form id="search" action="{% url 'catalog_search' %}" method="get">
+  <input id="search_field" type="text" name="q" value="Я хочу найти&hellip;"onFocus="this.value=(this.value=='Я хочу найти&hellip;')? '' : this.value ;"/>
+  <button id="#sf_submit" type="submit">поиск</button>
+</form> 
+
 {% for product in object_list %}
 {% empty %}
-    <p class="search_not_found">Товар {{ catalog_search }} по вашему запросу не найден...</p>
+    <p class="search_not_found">Товар {{  object_list.name }} по вашему запросу не найден...</p>
     <p class="search_not_found">Попробуйте повторить запрос с другой формулировкой</p>
 {% endfor %}
+
 <!-- <form id="search" action="{% url "catalog_search" %}" method="GET"> -->
   <!-- <fieldset> -->
     <!-- <legend>Я хочу найти:</legend> -->
@@ -48,7 +55,7 @@
         <div class="product_info">{{ product.name }}</div>
 
         <div class="brand">{{ product.brand }}</div>
-        <div class="product_price">{{ product.price|increase_perc_filter}} руб/шт.</div>
+        <div class="product_price">{{ product.price|increase_perc_filter}} руб/шт.</div> 
         <div class="product_basket">
           <a href="../../basket.html">Добавить в</a>
           <img src="{% static 'images/SVG/cart.svg' %}" alt="">

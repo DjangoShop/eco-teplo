@@ -9,10 +9,12 @@ from catalog.admin import ProductAdmin
 from django.views.generic import ListView, DetailView
 from django.conf.urls import url
 from django.db.models import Q
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
+from basket.forms import BasketAddProductForm
+...
 
 
-
+# Всем привет. Добавил в postgresql дополнение pg_trgm. В Django использую TrigramSimilarity, как совместить его с SearchVector
 # TODO так же ИК пленочный пол продается по кв.м. максимум 100 кв.м
 
 def all_floors_preview(request):
@@ -137,6 +139,11 @@ class conditioners_invertor(ListView):
 
 # Страница товара 
 
+# Страница товара
+# def ProductDetail(request, id, slug):
+#     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+#     return render(request, 'catalog/allCatalog/BaseProduct.html', {'product': product}) 
+
 class productView(DetailView):
     model = Product
     template_name = 'catalog/allCatalog/BaseProduct.html'
@@ -154,11 +161,12 @@ class search(ListView):
     def get_queryset(self):
         
         # Получаем не отфильтрованный кверисет всех моделей
-        stop_words = ~SearchQuery(['и', 'при', 'а', 'для', 'в', 'на', 'из', 'которые', 'дешовый', 'специальные', 'недорогие', 'по', 'у', 'за', 'руб', 'рубли', 'рублей', 'кабель', 'пленка'])
+        #stop_words = ~SearchQuery(['и', 'при', 'а', 'для', 'в', 'на', 'из', 'которые', 'дешовый', 'специальные', 'недорогие', 'по', 'у', 'за', 'руб', 'рубли', 'рублей', 'кабель', 'пленка'])
         queryset = super(search, self).get_queryset()
         q = self.request.GET.get("q")
+
       
-        # (Q(pg_searsh(first_brand)) | Q(pg_searsh(second_brand))
+        
         
         #return queryset.annotate(search=SearchQuery(Q('brand__name')) | SearchQuery(Q('name'))).filter(search=q)
        
@@ -166,16 +174,42 @@ class search(ListView):
         if q: #or q_lst or q_lst2
         # Если 'q' в GET запросе, фильтруем кверисет по данным из 'q'
             # FIXME сделать фильтр по ценам
-            # TODO добавить ещё один return, чтобы можно было искать по несколько брендов сразу
-            # TODO посмотреть можно ли, если написать название категории или бренда раздельно и как-то найти по такой строке
-            return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)
-            return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)  
+            # TODO Добавить в БД словарь стоп-слов
+           
+            
+            #search_query = SearchQuery(q, config='russian')
+             # search=q, config='russian') 
+            #pre_search = Product.objects.annotate(similarity=TrigramSimilarity('name', q)).filter(similarity__gt=0.3).order_by('-similarity')
+        
+            #return queryset.annotate(similarity=vector_trgm).filter(similarity__gt=0.2).order_by('price')
+             #.order_by('-similarity')
+            
+            vector = SearchVector('categorysub__name', 'brand__name', 'category__name', 'name', raw=True, fields=('name'))
+            vector_trgm = TrigramSimilarity('categorysub__name', q, raw=True, fields=('name')) + TrigramSimilarity('brand__name', q, raw=True, fields=('name')) + TrigramSimilarity('category__name', q, raw=True, fields=('name')) + TrigramSimilarity('name', q, raw=True, fields=('name'))
+            return queryset.annotate(search=vector).order_by('price').filter(search=q) or queryset.annotate(similarity=vector_trgm).filter(similarity__gt=0.2).order_by('price')
+
+            
+
+            
+            # return queryset.order_by('price').filter(category='11', categorysub='4')
+      # TODO сделать, что если q не находит рзультат, то обрабатывать обычным SearchVector
+       # elif q == '':
+
+        # return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)
+            #return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=q)
+            #return queryset.annotate(search=SearchVector('name')).order_by('price').filter(name__unaccent__startswith=q)
             #return queryset.annotate(search=SearchVector('brand__name', 'name', 'category__name', 'categorysub__name')).order_by('price').filter(search=stop_words)
      #       return Product.objects.search(q)
         elif not q:
              return queryset.order_by('price')
-        
-        
+
+    def post_context(self, request):
+        q = self.request.GET.get("q")
+        if not q:
+            message = 'Товар: %r не найден' % request.GET['q']
+        else:
+            message = 'You submitted an empty form.'
+        return HttpResponse(message)
         # TODO сделать название всех товаров, категорий, брендов и подкатегорий с маленькой буквы
         # не использовать букву ё в названиях
         # сделать чтобы он работал и во множественном числе тоже

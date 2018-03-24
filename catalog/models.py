@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+from django.db import models, migrations
 from django.core.urlresolvers import reverse
-
-
 
 
 # Модель категории
@@ -18,12 +16,10 @@ class Category(models.Model):
 
     
 
-    # def __str__(self):    
-    #     return self.name
+    def __str__(self):    
+        return self.name
 
-    def __unicode__(self):
-        return "%s" % (self.name)
-
+    
 # Модель подкатегории
 class SubCategory(models.Model):
     name = models.CharField(max_length=200, db_index=True, null=True, blank=True, verbose_name="Подкатегория")
@@ -35,12 +31,10 @@ class SubCategory(models.Model):
 
     
 
-    # def __str__(self):    
-    #     return self.name
+    def __str__(self):    
+        return self.name
 
-    def __unicode__(self):
-        return "%s" % (self.name)
-
+   
 # Модель бренда
 class Brand(models.Model):
     name = models.CharField(max_length=50, db_index=True, verbose_name="Бренд")
@@ -51,11 +45,10 @@ class Brand(models.Model):
 
     
 
-    # def __str__(self):    
-    #     return self.name
+    def __str__(self):    
+        return self.name
 
-    def __unicode__(self):
-        return "%s" % (self.name)
+   
 
 
 # Модель продукта
@@ -84,8 +77,8 @@ class Product(models.Model):
             ['id', 'slug']
         ]
 
-
     def __str__(self):
         return self.name
     
-    
+    # def get_absolute_url(self):
+    #     return reverse('catalog:ProductDetail', args=[self.id, self.slug])
